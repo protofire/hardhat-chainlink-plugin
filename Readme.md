@@ -6,8 +6,9 @@
 
 ## Step 2
 
+- Run npm install in the root directory
 
-## Step 2
+## Step 3
 
 ```
 docker-compose --env-file .env up -d
@@ -17,11 +18,23 @@ Visit node in http://127.0.0.1:6688
 Username is hardhatuser@protofire.io
 Password is password123456789
 
-## Step 3 [Work In Progress]
+## Step ..
+
+- Deploy Oracle
+- Deploy Link Token
+
+## Step 4 [Work In Progress]
+
+NB: To create mutiple jobs make sure to change job name and use the right Oracle address
 
 - In a new terminal while hardhat node is running
-- Run command below in your terminal to create a job inside the node. Note to create mutiple jobs make sure to change job name in the `--data-raw` field
+- Run command below in your terminal to create a job inside the node.
 
 ```
 node createJob.js
 ```
+
+## Step ..
+
+- Print out credentials and node details
+- Create sample smart contract to get ETH/USD Price feed
