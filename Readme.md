@@ -1,60 +1,58 @@
-## Step 1
+# Hardhat TypeScript plugin boilerplate
 
-- In your terminal open the hardhat folder.
-- Run `npm install`
-- Run `npx hardhat node`
+This is a sample Hardhat plugin written in TypeScript. Creating a Hardhat plugin
+can be as easy as extracting a part of your config into a different file and
+publishing it to npm.
 
-## Step 2
+This sample project contains an example on how to do that, but also comes with
+many more features:
 
-- Run npm install in the root directory
+- A mocha test suite ready to use
+- TravisCI already setup
+- A package.json with scripts and publishing info
+- Examples on how to do different things
 
-## Step 3
+## Installation
 
-```
-docker-compose --env-file .env up -d
-```
+To start working on your project, just run
 
-Visit node in http://127.0.0.1:6688
-Username is hardhatuser@protofire.io
-Password is password123456789
-
-## Step ..
-
-- Deploy Oracle
-- Deploy Link Token
-
-## Step 4 [Work In Progress]
-
-NB: To create mutiple jobs make sure to change job name and use the right Oracle address
-
-- In a new terminal while hardhat node is running
-- Run command below in your terminal to create a job inside the node.
-
-```
-curl 'http://127.0.0.1:6688/sessions' \
-  -H 'Accept: application/json' \
-  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8' \
-  -H 'Connection: keep-alive' \
-  -H 'Content-Type: application/json' \
-  -H 'Origin: http://127.0.0.1:6688' \
-  -H 'Referer: http://127.0.0.1:6688/signin' \
-  -H 'Sec-Fetch-Dest: empty' \
-  -H 'Sec-Fetch-Mode: cors' \
-  -H 'Sec-Fetch-Site: same-origin' \
-  -H 'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36' \
-  -H 'sec-ch-ua: "Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"' \
-  -H 'sec-ch-ua-mobile: ?0' \
-  -H 'sec-ch-ua-platform: "macOS"' \
-  --data-raw '{"email":"hardhatuser@protofire.io","password":"password123456789"}' \
-  --compressed \
-  --dump-header auth-credential
+```bash
+npm install
 ```
 
-```
-node createJob.js
-```
+## Plugin development
 
-## Step ..
+Make sure to read our [Plugin Development Guide](https://hardhat.org/advanced/building-plugins.html) to learn how to build a plugin.
 
-- Print out credentials and node details
-- Create sample smart contract to get ETH/USD Price feed
+## Testing
+
+Running `npm run test` will run every test located in the `test/` folder. They
+use [mocha](https://mochajs.org) and [chai](https://www.chaijs.com/),
+but you can customize them.
+
+We recommend creating unit tests for your own modules, and integration tests for
+the interaction of the plugin with Hardhat and its dependencies.
+
+## Linting and autoformat
+
+All of Hardhat projects use [prettier](https://prettier.io/) and
+[tslint](https://palantir.github.io/tslint/).
+
+You can check if your code style is correct by running `npm run lint`, and fix
+it with `npm run lint:fix`.
+
+## Building the project
+
+Just run `npm run build` ️👷
+
+## README file
+
+This README describes this boilerplate project, but won't be very useful to your
+plugin users.
+
+Take a look at `README-TEMPLATE.md` for an example of what a Hardhat plugin's
+README should look like.
+
+## Migrating from Buidler?
+
+Take a look at [the migration guide](MIGRATION.md)!
