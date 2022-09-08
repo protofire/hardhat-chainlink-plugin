@@ -1,3 +1,4 @@
+import fetch from 'node-fetch';
 //Usage:  node createJob.js hardhatuser@protofire.io password123456789
 async function run() {
 
