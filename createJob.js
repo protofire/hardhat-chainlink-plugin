@@ -1,7 +1,5 @@
 async function run() {
   const fs = require("fs");
-  const fetch = (...args) =>
-    import("node-fetch").then(({ default: fetch }) => fetch(...args));
   const buffer = fs.readFileSync("auth-credential");
   const content = buffer.toString();
   const regex = /clsession=[a-zA-Z0-9=]+/g; //Grab the session token
