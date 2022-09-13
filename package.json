@@ -1,6 +1,6 @@
 {
   "name": "hardhat-chainlink-plugin",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Hardhat TypeScript plugin to run a chainlink node and interact with it",
   "repository": "github:nomiclabs/hardhat-ts-plugin-boilerplate",
   "author": "Protofire.io",
@@ -19,10 +19,11 @@
     "test": "mocha --exit --recursive 'test/**/*.test.ts'",
     "build": "tsc",
     "watch": "tsc -w",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "docker": ""
   },
   "files": [
-    "dist/src/",
+    "dist/",
     "src/",
     "LICENSE",
     "README.md"
@@ -47,6 +48,7 @@
     "hardhat": "^2.0.0"
   },
   "dependencies": {
+    "docker-compose": "^0.23.17",
     "node-fetch": "^3.2.10"
   }
 }
