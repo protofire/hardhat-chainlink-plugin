@@ -1,58 +1,36 @@
-import { task } from "hardhat/config";
+import "@nomiclabs/hardhat-ethers";
+import { task, types } from "hardhat/config";
 // This import is needed to let the TypeScript compiler know that it should include your type
 // extensions in your npm package's types file.
 import "./type-extensions";
-import * as compose from "docker-compose";
-import path from "path";
-import fs from "fs";
-import fetch from "node-fetch";
+import { runNode } from "./tasks/run-node";
+import { createJob } from "./tasks/create-job";
+import { deployLinkToken } from "./tasks/deploy-link-token";
+import { deployOracle } from "./tasks/deploy-oracle";
+import { fund } from "./tasks/fund";
+import { nodeInfo } from "./tasks/node-info";
 
-task("chainlink:run-node", "Runs the chainlink node", () => 
-  compose.upAll({ cwd: path.join(__dirname), log: true })
-    .then(() => console.log('Node running'), err => console.error(err))
-)
+task("chainlink:run-node", "Runs the chainlink node").setAction(runNode)
 
-task(
-  "chainlink:create-job",
-  "Creates the job",
-).setAction(async function run() {
-  const buffer = fs.readFileSync("auth-credential");
-  const content = buffer.toString();
-  const regex = /clsession=[a-zA-Z0-9=]+/g; //Grab the session token
-  const match = content.toString().match(regex);
-  if (!match) throw new Error("No valid session found");
+task("chainlink:create-job", "Creates the job")
+  .addPositionalParam("email", "User email needed for login", null, types.string, false)
+  .addPositionalParam("pass", "Password for user needed for login", null, types.string, false)
+  .setAction(createJob)
 
-  console.info("Creating Job...");
+task("chainlink:deploy-link", "Deploys the Link token into a running node")
+  .setAction(deployLinkToken)
 
-  try {
-    //Create Job to perform ETH/USD
-    //@Todo Replace Oracle Address
-    //Generate Random Job Name
-    //Get ID of Job
-    const response = await fetch("http://127.0.0.1:6688/query", {
-      headers: {
-        accept: "*/*",
-        "accept-language": "en-GB,en-US;q=0.9,en;q=0.8",
-        "content-type": "application/json",
-        "sec-ch-ua":
-          '"Chromium";v="104", " Not A;Brand";v="99", "Google Chrome";v="104"',
-        "sec-ch-ua-mobile": "?0",
-        "sec-ch-ua-platform": '"macOS"',
-        "sec-fetch-dest": "empty",
-        "sec-fetch-mode": "cors",
-        "sec-fetch-site": "same-origin",
-        cookie: `blocalauth=localapibe315fd0c14b5e47:; isNotIncognito=true; _ga=GA1.1.2055974768.1644792885; ${match[0]}`,
-        Referer: "http://127.0.0.1:6688/jobs/new",
-        "Referrer-Policy": "strict-origin-when-cross-origin"
-      },
-      body: '{"operationName":"CreateJob","variables":{"input":{"TOML":"type = \\"directrequest\\"\\nschemaVersion = 1\\nname = \\"Get > Uint256\\"\\n# Optional External Job ID: Automatically generated if unspecified\\n# externalJobID = \\"b1d42cd5-4a3a-4200-b1f7-25a68e48aad8\\"\\ncontractAddress = \\"0x01BE23585060835E02B77ef475b0Cc51aA1e0709\\"\\nmaxTaskDuration = \\"0s\\"\\nobservationSource = \\"\\"\\"\\n    decode_log   [type=\\"ethabidecodelog\\"\\n                  abi=\\"OracleRequest(bytes32 indexed specId, address requester, bytes32 requestId, uint256 payment, address callbackAddr, bytes4 callbackFunctionId, uint256 cancelExpiration, uint256 dataVersion, bytes data)\\"\\n                  data=\\"$(jobRun.logData)\\"\\n                  topics=\\"$(jobRun.logTopics)\\"]\\n\\n    decode_cbor  [type=\\"cborparse\\" data=\\"$(decode_log.data)\\"]\\n    fetch        [type=\\"http\\" method=GET url=\\"$(decode_cbor.get)\\"]\\n    parse        [type=\\"jsonparse\\" path=\\"$(decode_cbor.path)\\" data=\\"$(fetch)\\"]\\n    multiply     [type=\\"multiply\\" input=\\"$(parse)\\" times=100]\\n    encode_data  [type=\\"ethabiencode\\" abi=\\"(uint256 value)\\" data=\\"{ \\\\\\\\\\"value\\\\\\\\\\": $(multiply) }\\"]\\n    encode_tx    [type=\\"ethabiencode\\"\\n                  abi=\\"fulfillOracleRequest(bytes32 requestId, uint256 payment, address callbackAddress, bytes4 callbackFunctionId, uint256 expiration, bytes32 data)\\"\\n                  data=\\"{\\\\\\\\\\"requestId\\\\\\\\\\": $(decode_log.requestId), \\\\\\\\\\"payment\\\\\\\\\\": $(decode_log.payment), \\\\\\\\\\"callbackAddress\\\\\\\\\\": $(decode_log.callbackAddr), \\\\\\\\\\"callbackFunctionId\\\\\\\\\\": $(decode_log.callbackFunctionId), \\\\\\\\\\"expiration\\\\\\\\\\": $(decode_log.cancelExpiration), \\\\\\\\\\"data\\\\\\\\\\": $(encode_data)}\\"\\n                 ]\\n    submit_tx    [type=\\"ethtx\\" to=\\"0x01BE23585060835E02B77ef475b0Cc51aA1e0709\\" data=\\"$(encode_tx)\\"]\\n\\n    decode_log -> decode_cbor -> fetch -> parse -> multiply -> encode_data -> encode_tx -> submit_tx\\n\\"\\"\\"\\n"}},"query":"mutation CreateJob($input: CreateJobInput!) {\\n  createJob(input: $input) {\\n    ... on CreateJobSuccess {\\n      job {\\n        id\\n        __typename\\n      }\\n      __typename\\n    }\\n    ... on InputErrors {\\n      errors {\\n        path\\n        message\\n        code\\n        __typename\\n      }\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n"}',
-      method: "POST"
-    });
+task("chainlink:deploy-oracle", "Deploys the oracle")
+  .addPositionalParam("nodeAddress", "The node address", null, types.string, false)
+  .addPositionalParam("linkAddress", "The Link token address", null, types.string, false)
+  .setAction(deployOracle)
 
-    const data = await response.json()
-    console.log(JSON.stringify(data));
-  } catch (e) {
-    console.log('Could not create job')
-    console.error(e)
-  }
-})
+task("chainlink:fund", "Funds the node with ETH")
+  .addPositionalParam("nodeAddress", "The node address", null, types.string, false)
+  .addPositionalParam("amount", "Amount to fund", null, types.string, false)
+  .setAction(fund)
+
+task("chainlink:node-info", "Get node info")
+  .addPositionalParam("email", "User email needed for login", null, types.string, false)
+  .addPositionalParam("pass", "Password for user needed for login", null, types.string, false)
+  .setAction(nodeInfo)

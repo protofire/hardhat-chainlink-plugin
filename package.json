@@ -1,12 +1,12 @@
 {
   "name": "hardhat-chainlink-plugin",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "Hardhat TypeScript plugin to run a chainlink node and interact with it",
   "repository": "github:nomiclabs/hardhat-ts-plugin-boilerplate",
   "author": "Protofire.io",
   "license": "MIT",
-  "main": "dist/src/index.js",
-  "types": "dist/src/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "keywords": [
     "ethereum",
     "smart-contracts",
@@ -19,14 +19,10 @@
     "test": "mocha --exit --recursive 'test/**/*.test.ts'",
     "build": "tsc",
     "watch": "tsc -w",
-    "prepublishOnly": "npm run build",
-    "docker": ""
+    "prepublishOnly": "npm run build"
   },
   "files": [
-    "dist/",
-    "src/",
-    "LICENSE",
-    "README.md"
+    "src"
   ],
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
