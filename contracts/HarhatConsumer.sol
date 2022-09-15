@@ -847,7 +847,7 @@ abstract contract ChainlinkClient {
   uint256 private constant OPERATOR_ARGS_VERSION = 2;
   bytes32 private constant ENS_TOKEN_SUBNAME = keccak256("link");
   bytes32 private constant ENS_ORACLE_SUBNAME = keccak256("oracle");
-  address private constant LINK_TOKEN_POINTER = 0xC89bD4E1632D3A43CB03AAAd5262cbe4038Bc571;
+  address private constant LINK_TOKEN_POINTER = 0xa513E6E4b8f2a923D98304ec87F64353C4D5C853;
 
   ENSInterface private s_ens;
   bytes32 private s_ensNode;

@@ -1,50 +1,47 @@
-//@Todo Figure out how to get the JOb External ID for this scrip usage without having to Login UI
-//Usage:  node exampleGetEthUsdPrice.js 0x5FbDB2315678afecb367f032d93F642f64180aa3 0x5FbDB2315678afecb367f032d93F642f64180aa3  54a90651143248f695e64302e638a332  //LinkToken Address , Oracle Address and Job external ID without the dashes
+//Usage:  node exampleGetEthUsdPrice.js 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 0x5FC8d32690cc91D4c39d9d3abcBD16989F875707 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 98df25f2d7404948a446da06f89a97a3 
+//LinkToken Address, Consumer Address, Oracle Address and Job external ID without the dashes
 const hre = require("hardhat");
 const { join } = require("path");
 
 async function main() {
-  const [linkAddress, oracleAddress, jobId] = process.argv.slice(2);
+  const [linkAddress, consumerAddress, oracleAddress, jobId] =
+    process.argv.slice(2);
+  const { ethers } = hre;
+  const provider = new ethers.providers.JsonRpcProvider(
+    "http://127.0.0.1:8545"
+  );
 
-  let consumer;
+  const wallet = new ethers.Wallet(
+    "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", //Hardhat wallet are deterministic and the same across al hardhat users
+    provider
+  );
 
-  const Consumer = await hre.ethers.getContractFactory("HarhatConsumer");
-  const LinkToken = await hre.ethers.getContractFactory("LinkToken");
+  const LinkToken = await ethers.getContractFactory("LinkToken", wallet);
+  const linkToken = LinkToken.attach(linkAddress);
 
-  console.log(linkAddress);
-  //   signer = await hre.ethers.getSigner();
-  //   const linkTokenArtifact = await hre.artifacts.readArtifact("LinkToken");
-  //   const linkToken = new hre.ethers.Contract(
-  //     linkAddress,
-  //     linkTokenArtifact.abi,
-  //     signer
-  //   );
-
-  // const linkToken = await hre.ethers.getContractAt(
-  //   "LinkToken",
-  //   "0x5FbDB2315678afecb367f032d93F642f64180aa3"
-  // );
-
-  const linkToken = await LinkToken.deploy();
-
-  await linkToken.deployed();
-
-  consumer = await Consumer.deploy(linkToken.address);
-
-  await consumer.deployed();
+  const Consumer = await ethers.getContractFactory("HarhatConsumer", wallet);
+  const consumer = Consumer.attach(consumerAddress);
 
   //Give LINK Token to pay oracle for request to chainlink node
   //Enough for 100 requests to Node, settings on Oracle charges 1 LINK for fufilling each request
-  await linkToken.transfer(
-    consumer.address,
-    hre.ethers.utils.parseEther("100")
-  );
+  // await linkToken.transfer(
+  //   consumerAddress,
+  //   hre.ethers.utils.parseEther("100"),
+  //   {
+  //     from: wallet.address,
+  //   }
+  // );
 
   const res = await consumer.requestEthereumPrice(oracleAddress, jobId);
 
-  //   const currentPrice = await consumer.currentPrice();
+  const waited = await res.wait();
 
-  //   console.log({ currentPrice });
+  // console.log(res);
+  // console.log("Waited", waited);
+
+  const currentPrice = await consumer.currentPrice();
+
+  console.log({ currentPrice });
 }
 
 main().catch((error) => {
