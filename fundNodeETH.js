@@ -6,8 +6,8 @@ async function main() {
   const { ethers } = hre;
 
   const fundAmount = amount.length
-    ? hre.ethers.utils.parseEther(amount)
-    : hre.ethers.utils.parseEther("10");
+    ? ethers.utils.parseEther(amount)
+    : ethers.utils.parseEther("10");
 
   const provider = new ethers.providers.JsonRpcProvider(
     "http://127.0.0.1:8545"

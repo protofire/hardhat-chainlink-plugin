@@ -3,8 +3,17 @@ const hre = require("hardhat");
 
 async function main() {
   const [nodeAddress, linkAddress] = process.argv.slice(2);
+  const { ethers } = hre;
+  const provider = new ethers.providers.JsonRpcProvider(
+    "http://127.0.0.1:8545"
+  );
 
-  const Oracle = await hre.ethers.getContractFactory("Oracle");
+  const wallet = new ethers.Wallet(
+    "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", //Hardhat wallet are deterministic and the same across al hardhat users
+    provider
+  );
+
+  const Oracle = await ethers.getContractFactory("Oracle", wallet);
   const oracle = await Oracle.deploy(linkAddress);
 
   await oracle.deployed();
