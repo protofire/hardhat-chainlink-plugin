@@ -1,4 +1,5 @@
-//Usage:  node exampleGetEthUsdPrice.js 0x5FbDB2315678afecb367f032d93F642f64180aa3 0x5FbDB2315678afecb367f032d93F642f64180aa3  54a90651143248f695e64302e638a332  //LinkToken Address , Oracle Address and Job external ID without the dashes
+//Usage:  node fundLink.js 0x5FbDB2315678afecb367f032d93F642f64180aa3 0x5FbDB2315678afecb367f032d93F642f64180aa3
+//LinkToken Address , Consumer Address to fund
 const hre = require("hardhat");
 const { join } = require("path");
 

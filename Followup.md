@@ -72,7 +72,3 @@ Deploy Consumer Contract: https://remix.ethereum.org/#url=https://docs.chain.lin
 Pass LinkToken Address , Oracle Address and Job external ID without the dashes
 
 `node exampleGetEthUsdPrice.js 0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512 0x9fE46736679d2D9a65F0992F2272dE9f3c7fa6e0 98df25f2d7404948a446da06f89a97a3`
-
-allowUnrestrictedNetworkAccess="true"
-
-fetch [type="http" method=GET url="$(decode_cbor.url)" allowUnrestrictedNetworkAccess="true"]
