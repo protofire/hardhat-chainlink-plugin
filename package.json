@@ -1,8 +1,8 @@
 {
   "name": "hardhat-chainlink-plugin",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Hardhat TypeScript plugin to run a chainlink node and interact with it",
-  "repository": "github:nomiclabs/hardhat-ts-plugin-boilerplate",
+  "repository": "github:protofire/hardhat-chainlink-plugin",
   "author": "Protofire.io",
   "license": "MIT",
   "main": "dist/index.js",
@@ -17,12 +17,12 @@
     "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && tslint --fix --config tslint.json --project tsconfig.json",
     "lint": "tslint --config tslint.json --project tsconfig.json",
     "test": "mocha --exit --recursive 'test/**/*.test.ts'",
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "tsc --project tsconfig.json",
+    "watch": "tsc -w --project tsconfig.json",
     "prepublishOnly": "npm run build"
   },
   "files": [
-    "src"
+    "dist"
   ],
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^1.0.2",
@@ -30,6 +30,7 @@
     "@types/fs-extra": "^9.0.13",
     "@types/mocha": "^9.1.1",
     "@types/node": "^18.7.16",
+    "@types/node-fetch": "^2.6.2",
     "chai": "^4.3.6",
     "hardhat": "^2.11.1",
     "mocha": "^10.0.0",
@@ -45,7 +46,7 @@
   },
   "dependencies": {
     "docker-compose": "^0.23.17",
-    "node-fetch": "^3.2.10",
+    "node-fetch": "2.6.6",
     "uuid": "^9.0.0"
   }
 }

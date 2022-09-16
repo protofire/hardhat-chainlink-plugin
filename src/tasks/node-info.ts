@@ -2,7 +2,7 @@ import { ActionType } from "hardhat/types";
 import { login } from "../helpers/login";
 
 
-export const nodeInfo: ActionType<[string, string]> = async (taskArgs, env, runSuper) => {
+export const nodeInfo: ActionType<[string, string]> = async (taskArgs) => {
   const [email, password] = taskArgs;
 
   const authenticationToken = await login(email.trim(), password.trim());
