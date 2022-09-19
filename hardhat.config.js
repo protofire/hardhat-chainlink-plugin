@@ -1,5 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
-
+require("./dist")
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
