@@ -1,7 +1,7 @@
 import { ActionType } from "hardhat/types";
 
-export const deployOracle: ActionType<[string, string]> = async (taskArgs, hre) => {
-  const [nodeAddress, linkAddress] = taskArgs;
+export const deployOracle: ActionType<{ nodeAddress: string, linkAddress: string }> = async (taskArgs, hre) => {
+  const { nodeAddress, linkAddress } = taskArgs;
 
   const Oracle = await hre.ethers.getContractFactory("Oracle");
   const oracle = await Oracle.deploy(linkAddress);

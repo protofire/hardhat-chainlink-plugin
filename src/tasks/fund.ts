@@ -1,7 +1,7 @@
 import { ActionType } from "hardhat/types";
 
-export const fundEth: ActionType<[string, string]> = async (taskArgs, hre, runSuper) => {
-  const [address, amount] = taskArgs;
+export const fundEth: ActionType<{ address: string, amount: string }> = async (taskArgs, hre, runSuper) => {
+  const {address, amount} = taskArgs;
   const { ethers } = hre;
 
   const fundAmount = amount.length
@@ -30,8 +30,8 @@ export const fundEth: ActionType<[string, string]> = async (taskArgs, hre, runSu
   );
 }
 
-export const fundLink: ActionType<[string, string]> = async (taskArgs, hre) => {
-  const [linkAddress, fundAddress] = taskArgs;
+export const fundLink: ActionType<{ nodeAddress: string, linkAddress: string }> = async (taskArgs, hre) => {
+  const {linkAddress, nodeAddress} = taskArgs;
   const { ethers } = hre;
   const provider = new ethers.providers.JsonRpcProvider(
     "http://127.0.0.1:8545"
@@ -48,7 +48,7 @@ export const fundLink: ActionType<[string, string]> = async (taskArgs, hre) => {
   //Give LINK Token to pay oracle for request to chainlink node
   //Enough for 100 requests to Node, settings on Oracle charges 1 LINK for fufilling each request
   const res = await linkToken.transfer(
-    fundAddress,
+    nodeAddress,
     hre.ethers.utils.parseEther("100"),
     {
       from: wallet.address,

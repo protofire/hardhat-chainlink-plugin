@@ -2,10 +2,10 @@ import { ActionType } from "hardhat/types";
 import { login } from "../helpers/login";
 
 
-export const nodeInfo: ActionType<[string, string]> = async (taskArgs) => {
-  const [email, password] = taskArgs;
-
-  const authenticationToken = await login(email.trim(), password.trim());
+export const nodeInfo: ActionType<{ email: string, pass: string }> = async (taskArgs) => {
+  const {email, pass} = taskArgs;
+  
+  const authenticationToken = await login(email.trim(), pass.trim());
 
   try {
     const query = await fetch("http://127.0.0.1:6688/query", {
