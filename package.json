@@ -17,7 +17,7 @@
     "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && tslint --fix --config tslint.json --project tsconfig.json",
     "lint": "tslint --config tslint.json --project tsconfig.json",
     "test": "mocha --exit --recursive 'test/**/*.test.ts'",
-    "build": "tsc --project tsconfig.json && cp deprecated_files/Dockerfile dist && cp deprecated_files/docker-compose.yaml dist && cp deprecated_files/env.template dist/.env && cp deprecated_files/.api dist && cp deprecated_files/.password dist",
+    "build": "tsc --project tsconfig.json && cp src/setup/Dockerfile dist && cp src/setup/docker-compose.yaml dist && cp src/setup/env.template dist/tasks/.env",
     "watch": "tsc -w --project tsconfig.json",
     "prepublishOnly": "npm run build"
   },
