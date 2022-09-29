@@ -7,13 +7,18 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - POSTGRES_DB=${POSTGRES_DB}
   chainlink-hardhat-node:
-    build: ..
+    build:
+      context: .
+      args:
+        - API_USER_EMAIL=${API_USER_EMAIL}
+        - API_USER_PASSWORD=${API_USER_PASSWORD}
+        - WALLET_PASSWORD=${WALLET_PASSWORD}
     depends_on:
       - chainlink-hardhat-postgres
     ports:
       - 6688:6688
     volumes:
-      - .:/chainlink
+      - chainlink_data:/chainlink
     command: local node -p /chainlink/.password -a /chainlink/.api
     restart: on-failure
     environment:
@@ -25,3 +30,6 @@ services:
       - ALLOW_ORIGINS=${ALLOW_ORIGINS}
       - ETH_URL=ws://host.docker.internal:${HARDHAT_NODE_PORT}
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@chainlink-hardhat-postgres:5432/${POSTGRES_DB}?sslmode=disable
+
+volumes:
+  chainlink_data:
