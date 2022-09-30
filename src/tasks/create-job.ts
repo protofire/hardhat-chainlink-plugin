@@ -28,7 +28,7 @@ export const createJob: ActionType<{
     const data = await axios.request<any, QueryResponse>({
       url: 'http://127.0.0.1:6688/query',
       headers: {
-        'content-type': 'application/json',
+        'Content-Type': 'application/json',
         cookie: `blocalauth=localapibe315fd0c14b5e47:; isNotIncognito=true; _ga=GA1.1.2055974768.1644792885; ${authenticationToken}`,
         Referer: 'http://127.0.0.1:6688/jobs/new'
       },
@@ -39,7 +39,7 @@ export const createJob: ActionType<{
     console.table({
       Status: 'Success',
       Error: data.errors != null ? data?.errors[0]?.message : null,
-      JobID: data?.data?.createJob?.job?.id,
+      JobID: data?.data?.data?.createJob?.job?.id,
       ExternalID: externalID
     })
   } catch (e) {

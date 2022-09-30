@@ -92,6 +92,7 @@ Output will look like this
 ```
 
 Copy the node address and replace it in the command below to fund your wallet.
+You can also get the address from the UI.
 
 ```console
 npx hardhat chainlink:fund-eth 0x786729C810294D47E935aE636F66f6cE35E9B99d 20
@@ -115,7 +116,7 @@ Output:
 └─────────┴──────────────────────────────────────────────┘
 ```
 
-If you login again to your Node UI from http://127.0.0.1:6688 or simply refresh the page if you are still login. You will see the node updated password on the dashboard.
+If you login again to your Node UI from http://127.0.0.1:6688 or simply refresh the page if you are still login. You will see the node updated.
 
 **Step 7:**
 
