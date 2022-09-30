@@ -17,7 +17,7 @@ declare interface ResponseData {
 }
 
 const getInfo = async (authToken: string): Promise<ResponseData> => {
-  return await axios.request({
+  const response = await axios.request({
     url: 'http://127.0.0.1:6688/query',
     headers: {
       'content-type': 'application/json',
@@ -27,6 +27,8 @@ const getInfo = async (authToken: string): Promise<ResponseData> => {
     data: '{"operationName":"FetchAccountBalances","variables":{},"query":"fragment AccountBalancesPayload_ResultsFields on EthKey {\\n  address\\n  chain {\\n    id\\n    __typename\\n  }\\n  ethBalance\\n  isFunding\\n  linkBalance\\n  __typename\\n}\\n\\nquery FetchAccountBalances {\\n  ethKeys {\\n    results {\\n      ...AccountBalancesPayload_ResultsFields\\n      __typename\\n    }\\n    __typename\\n  }\\n}\\n"}',
     method: 'POST'
   })
+
+  return response.data
 }
 
 export const nodeInfo: ActionType<{ email: string, pass: string }> = async (
@@ -37,12 +39,12 @@ export const nodeInfo: ActionType<{ email: string, pass: string }> = async (
   const authenticationToken = await login(email.trim(), pass.trim())
 
   try {
-    const response = await getInfo(authenticationToken)
+    const info = await getInfo(authenticationToken)
 
     console.table({
-      Address: response?.data?.ethKeys?.results[0]?.address,
-      Balance: response?.data?.ethKeys?.results[0]?.ethBalance,
-      ChainID: response?.data?.ethKeys?.results[0]?.chain?.id
+      Address: info.data?.ethKeys?.results[0]?.address,
+      Balance: info.data?.ethKeys?.results[0]?.ethBalance,
+      ChainID: info.data?.ethKeys?.results[0]?.chain?.id
     })
   } catch (error) {
     console.log('Could not get Node address reason: ', error)
