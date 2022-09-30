@@ -17,7 +17,7 @@
     "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && eslint 'src/**/*.{js,ts}' --fix",
     "lint": "eslint src/**/*.ts",
     "test": "mocha --exit --recursive 'test/**/*.test.ts'",
-    "build": "tsc --project tsconfig.json && cp Dockerfile dist && cp docker-compose.yaml dist && cp env.template dist/.env",
+    "build": "tsc --project tsconfig.json && cp src/setup/Dockerfile dist && cp src/setup/docker-compose.yaml dist && cp src/setup/env.template dist/tasks/.env",
     "watch": "tsc -w --project tsconfig.json",
     "prepublishOnly": "npm run build"
   },
