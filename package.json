@@ -14,10 +14,10 @@
     "hardhat-plugin"
   ],
   "scripts": {
-    "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && tslint --fix --config tslint.json --project tsconfig.json",
-    "lint": "tslint --config tslint.json --project tsconfig.json",
+    "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && eslint 'src/**/*.{js,ts}' --fix",
+    "lint": "eslint src/**/*.ts",
     "test": "mocha --exit --recursive 'test/**/*.test.ts'",
-    "build": "tsc --project tsconfig.json && cp deprecated_files/Dockerfile dist && cp deprecated_files/docker-compose.yaml dist && cp deprecated_files/env.template dist/.env && cp deprecated_files/.api dist && cp deprecated_files/.password dist",
+    "build": "tsc --project tsconfig.json && cp Dockerfile dist && cp docker-compose.yaml dist && cp env.template dist/.env",
     "watch": "tsc -w --project tsconfig.json",
     "prepublishOnly": "npm run build"
   },
@@ -32,15 +32,19 @@
     "@types/node": "^18.7.16",
     "@types/node-fetch": "^2.6.2",
     "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
     "chai": "^4.3.6",
+    "eslint": "^8.24.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1",
     "hardhat": "^2.11.1",
     "mocha": "^10.0.0",
     "prettier": "2.7.1",
     "ts-node": "^10.9.1",
-    "tslint": "^6.1.3",
-    "tslint-config-prettier": "^1.18.0",
-    "tslint-plugin-prettier": "^2.3.0",
-    "typescript": "^4.8.2"
+    "typescript": "^4.8.4"
   },
   "peerDependencies": {
     "hardhat": "^2.0.0"
@@ -48,8 +52,8 @@
   "dependencies": {
     "@chainlink/contracts": "^0.5.1",
     "@nomicfoundation/solidity-analyzer": "^0.1.0",
-    "docker-compose": "^0.23.17",
     "axios": "0.27.2",
+    "docker-compose": "^0.23.17",
     "uuid": "^9.0.0"
   }
 }
