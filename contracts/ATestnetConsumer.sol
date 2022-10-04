@@ -25,11 +25,11 @@ contract ATestnetConsumer is ChainlinkClient, ConfirmedOwner {
 
     /**
      *  Goerli
-     *@dev LINK address in Goerli network: 0x5FbDB2315678afecb367f032d93F642f64180aa3
+     *@dev LINK address in Goerli network: 0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9
      * @dev Check https://docs.chain.link/docs/link-token-contracts/ for LINK address for the right network
      */
     constructor() ConfirmedOwner(msg.sender) {
-        setChainlinkToken(0x5FbDB2315678afecb367f032d93F642f64180aa3);
+        setChainlinkToken(0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9);
     }
 
     function requestEthereumPrice(address _oracle, string memory _jobId) public onlyOwner {

@@ -76,7 +76,7 @@ Next, for your chainlink node to fufill request it needs to be funded with ETH. 
 Running the command below does just that.
 
 ```console
-npx hardhat chainlink:node-info hardhatuser@protofire.io password123456789
+npx hardhat chainlink:node-info hardhatuser@protofire.io password123456789 --network localhost
 ```
 
 Output will look like this
@@ -94,13 +94,13 @@ Output will look like this
 Copy the node address and replace it in the command below to fund your wallet.
 
 ```console
-npx hardhat chainlink:fund-eth 0x786729C810294D47E935aE636F66f6cE35E9B99d 20
+npx hardhat chainlink:fund-eth 0x786729C810294D47E935aE636F66f6cE35E9B99d 20 --network localhost
 ```
 
 Now check the node info again, to see the updated balance.
 
 ```console
-npx hardhat chainlink:node-info hardhatuser@protofire.io password123456789
+npx hardhat chainlink:node-info hardhatuser@protofire.io password123456789 --network localhost
 ```
 
 Output:
@@ -122,7 +122,7 @@ If you login again to your Node UI from http://127.0.0.1:6688 or simply refresh 
 Deploy Link token on hardhat. Link Token will be used by Consumer contract to pay for Oracle request.
 
 ```console
-npx hardhat chainlink:deploy-link
+npx hardhat chainlink:deploy-link --network localhost
 ```
 
 Output
@@ -142,7 +142,7 @@ Deploy Oracle contract.
 Pass the chainlink node address as the first parameter and Link Token address as the second parameter.
 
 ```console
-npx hardhat chainlink:deploy-oracle 0xBe576260A47175829f250732421522B7ec204D06 0x5FbDB2315678afecb367f032d93F642f64180aa3
+npx hardhat chainlink:deploy-oracle 0xBe576260A47175829f250732421522B7ec204D06 0x5FbDB2315678afecb367f032d93F642f64180aa3 --network localhost
 ```
 
 Output
@@ -190,8 +190,7 @@ Before you proceed with that, there are a few things to note.
 2. Install the `@chainlink/contracts` dependecies.
 3. Deploy the contract to hardhat local network where our chainlink node is operating.
 4. Call `requestEthereumPrice` method and set the Oracle address to your deployed Oracle address and job Id to the External ID without the `-`. So if your job external id is `95cd6192-8dc8-4e1d-903d-3e7b885bc9d5`, change it to `95cd61928dc84e1d903d3e7b885bc9d5` before passing it.
-5. Fund your deployed ATestnetConsumer with some Link token. To do so use the command `npx hardhat chainlink:fund-link 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 0x5FbDB2315678afecb367f032d93F642f64180aa3`, where the first parameter is your
-   ATestnetConsumer contract address and the second parameter is your Link token address.
+5. Fund your deployed ATestnetConsumer with some Link token. To do so use the command `npx hardhat chainlink:fund-link 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 0x5FbDB2315678afecb367f032d93F642f64180aa3 --network localhost`, where the first parameter is your `ATestnetConsumer` contract address and the second parameter is your Link token address.
 6. Afterwards call method `currentPrice` on your contract to get the updated price returned by the Oracle.
 
 **NB:** You can change the ATestnetConsumer to get another price pair supported by `https://min-api.cryptocompare.com`.
@@ -328,8 +327,7 @@ Before you proceed with that, there are a few things to note.
 2. Install the `@chainlink/contracts` dependecies.
 3. Deploy the contract using hardhat to hardhat network.
 4. Call `requestEthereumPrice` method from your test or script and pass the the parameters `_oracle` as your deployed Oracle and `_jobId` as your Job External ID without the `-`. So if your Job External ID is `95cd6192-8dc8-4e1d-903d-3e7b885bc9d5`, change it to `95cd61928dc84e1d903d3e7b885bc9d5` without the `-` before passing it.
-5. Fund your deployed ATestnetConsumer with some Link token. To do so use the command `npx hardhat chainlink:fund-link 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 0x5FbDB2315678afecb367f032d93F642f64180aa3`, where the first parameter is your
-   ATestnetConsumer contract address and the second parameter is your Link token address.
+5. Fund your deployed ATestnetConsumer with some Link token. To do so use the command `npx hardhat chainlink:fund-link 0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9 0x5FbDB2315678afecb367f032d93F642f64180aa3`, where the first parameter is your is your Link token address and the second parameter ATestnetConsumer contract address .
 6. Afterwards call method `currentPrice` on your contract to get the updated price returned by the Oracle.
 
 // Todo: Add further instruction on hardhat.config.js to set localhost network and deploy script instructions in details
@@ -338,3 +336,37 @@ Before you proceed with that, there are a few things to note.
 ## Known Issues
 
 - Starting the chainlink node before the hardhat node will cause irregular behaviour for the chainlink node.
+
+# Example ATestnetConsumer
+
+## Step 1
+
+Change the Link Token Contract Address on line 32 in `ATestnetConsumer.sol`
+
+## Step 2
+
+Deploy
+
+```console
+npx hardhat --network localhost run scripts/deploy.js
+
+OR
+
+HARDHAT_NETWORK=localhost node scripts/deploy.js
+```
+
+## Step 3
+
+Change the Link address to your Link address and Fund address to your consumer address then run
+
+```console
+npx hardhat --network localhost run scripts/fundLink.js
+```
+
+## Step 4
+
+Run script that calls `requestEthereumPrice` on `ATestnetConsumer`
+
+```console
+npx hardhat --network localhost run scripts/oracleRequest.js
+```

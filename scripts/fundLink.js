@@ -4,10 +4,10 @@ const hre = require("hardhat");
 
 async function main() {
   const [linkAddress, fundAddress] = [
-    "0x5FbDB2315678afecb367f032d93F642f64180aa3",
-    "0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512",
+    "0xCf7Ed3AccA5a467e9e704C703E8D87F634fB0Fc9",
+    "0xd8b934580fcE35a11B58C6D73aDeE468a2833fa8",
   ];
-  //   process.argv.slice(2);
+
   const { ethers } = hre;
   const provider = new ethers.providers.JsonRpcProvider(
     "http://127.0.0.1:8545"
@@ -33,8 +33,7 @@ async function main() {
 
   const balance = await linkToken.balanceOf(fundAddress);
 
-  console.table({ "Consumer Link Balance": balance });
-  // console.log(res);
+  console.table({ "Consumer Link Balance": parseInt(balance) });
 }
 
 main().catch((error) => {

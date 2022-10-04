@@ -7,15 +7,31 @@
 const hre = require("hardhat");
 
 async function main() {
-  // const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  // const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  // const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  // hre.ethers.utils.parseEther("1");
 
-  // const lockedAmount = hre.ethers.utils.parseEther("1");
+  // const ATestnetConsumer = await hre.ethers.getContractFactory(
+  //   "ATestnetConsumer"
+  // );
+  // const testnetConsumer = await ATestnetConsumer.deploy();
+
+  // await testnetConsumer.deployed();
+
+  const { ethers } = hre;
+
+  const provider = new ethers.providers.JsonRpcProvider(
+    "http://127.0.0.1:8545"
+  );
+
+  const wallet = new ethers.Wallet(
+    "ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80", //Hardhat wallet are deterministic and the same across al hardhat users
+    provider
+  );
 
   const ATestnetConsumer = await hre.ethers.getContractFactory(
-    "ATestnetConsumer"
+    "ATestnetConsumer",
+    wallet
   );
+
   const testnetConsumer = await ATestnetConsumer.deploy();
 
   await testnetConsumer.deployed();
