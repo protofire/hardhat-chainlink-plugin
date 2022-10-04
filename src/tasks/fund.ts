@@ -7,10 +7,7 @@ export const fundEth: ActionType<{
   const { nodeAddress, amount } = taskArgs
   const { ethers } = hre
 
-  const fundAmount =
-    parseFloat(amount) > 0
-      ? hre.ethers.utils.parseEther(amount)
-      : hre.ethers.utils.parseEther('10')
+  const fundAmount = hre.ethers.utils.parseEther(amount ?? '10')
 
   const provider = new ethers.providers.JsonRpcProvider(
     'http://127.0.0.1:8545'

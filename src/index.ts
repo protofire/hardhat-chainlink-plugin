@@ -16,6 +16,7 @@ task('chainlink:create-job', 'Creates the job')
   .addPositionalParam('email', 'User email needed for login')
   .addPositionalParam('pass', 'Password for user needed for login')
   .addPositionalParam('oracleAddress', 'Address of Oracle')
+  .addOptionalPositionalParam('jobType', 'direct or cron')
   .setAction(createJob)
 
 task(
