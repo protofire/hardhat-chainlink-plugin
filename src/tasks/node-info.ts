@@ -40,7 +40,7 @@ export const nodeInfo: ActionType<{ email: string, pass: string }> = async (
 
   try {
     const info = await getInfo(authenticationToken)
-
+    
     console.table({
       Address: info.data?.ethKeys?.results[0]?.address,
       Balance: info.data?.ethKeys?.results[0]?.ethBalance,

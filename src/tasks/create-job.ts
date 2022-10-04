@@ -39,7 +39,7 @@ export const createJob: ActionType<{
     console.table({
       Status: 'Success',
       Error: data.errors != null ? data?.errors[0]?.message : null,
-      JobID: data?.data?.createJob?.job?.id,
+      JobID: data?.data?.data?.createJob?.job?.id,
       ExternalID: externalID
     })
   } catch (e) {
