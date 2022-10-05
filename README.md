@@ -36,7 +36,7 @@ Open Docker Desktop
 
 **Step 3:**
 
-Run hardhat node
+Always run hardhat node first
 
 ```console
 npx hardhat node
@@ -53,7 +53,7 @@ npm run build
 
 **Step 5:**
 
-Spin up a chainlink node using.
+Spin up a chainlink node using the following command, this will set-up some env variables. Please do not start it from docker desktop. 
 
 ```console
 npx hardhat chainlink:run-node
@@ -94,7 +94,7 @@ Output will look like this
 Copy the node address and replace it in the command below to fund your wallet.
 
 ```console
-npx hardhat chainlink:fund-eth 0x786729C810294D47E935aE636F66f6cE35E9B99d 20 --network localhost
+npx hardhat chainlink:fund-eth 0x244f78C560F6cfcB3baBEe375ae064C6e9259989 20 --network localhost
 ```
 
 Now check the node info again, to see the updated balance.
