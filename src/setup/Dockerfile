@@ -1,4 +1,4 @@
-FROM smartcontract/chainlink:1.6.0-root
+FROM smartcontract/chainlink:1.8.0-root
 
 RUN mkdir /chainlink
 
