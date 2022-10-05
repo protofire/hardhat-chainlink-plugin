@@ -58,6 +58,11 @@ Spin up a chainlink node using the following command, this will set-up some env 
 ```console
 npx hardhat chainlink:run-node
 ```
+IMPORTANT! This command uses docker and as such it requires docker installed (and docker compose).
+
+Each time this command runs it will remove all containers and re-create them (before running docker compose up we first run docker compose down)
+
+This behavior is analogous to the hardhat EVM node losing all previous history each time it is restarted.
 
 If you visit http://127.0.0.1:6688 in your browser, you should see the chainlink node login page displayed.
 
