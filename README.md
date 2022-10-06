@@ -76,12 +76,12 @@ npx hardhat
 
 **Step 6:**
 
-Next, for your chainlink node to fufill request it needs to be funded with ETH. To fund your node first you need to get the node info.
+Next, for your chainlink node to fulfill request it needs to be funded with ETH. To fund your node first you need to get the node info.
 
 Running the command below does just that.
 
 ```console
-npx hardhat chainlink:node-info hardhatuser@protofire.io password123456789 --network localhost
+npx hardhat chainlink:node-info --network localhost
 ```
 
 Output will look like this
@@ -105,7 +105,7 @@ npx hardhat chainlink:fund-eth 0x244f78C560F6cfcB3baBEe375ae064C6e9259989 20 --n
 Now check the node info again, to see the updated balance.
 
 ```console
-npx hardhat chainlink:node-info hardhatuser@protofire.io password123456789 --network localhost
+npx hardhat chainlink:node-info --network localhost
 ```
 
 Output:
@@ -167,7 +167,7 @@ Create a chainlink Job.
 Pass your node username, password, deployed Oracle address and job type (direct | cron).
 
 ```console
-npx hardhat chainlink:create-job hardhatuser@protofire.io password123456789 0x5FbDB2315678afecb367f032d93F642f64180aa3 direct
+npx hardhat chainlink:create-job 0x5FbDB2315678afecb367f032d93F642f64180aa3 direct
 ```
 
 Output
