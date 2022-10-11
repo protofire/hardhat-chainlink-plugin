@@ -33,9 +33,8 @@ task('chainlink:fund-eth', 'Funds the node with ETH')
   .setAction(fundEth)
 
 task('chainlink:fund-link', 'Funds the node with LINK')
-  .addPositionalParam('nodeAddress', 'The node address')
   .addPositionalParam('linkAddress', 'The link token address')
+  .addPositionalParam('contractAddress', 'The consumer contract address')
   .setAction(fundLink)
 
-task('chainlink:node-info', 'Get node info')
-  .setAction(nodeInfo)
+task('chainlink:node-info', 'Get node info').setAction(nodeInfo)

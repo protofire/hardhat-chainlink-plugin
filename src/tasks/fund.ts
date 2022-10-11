@@ -33,10 +33,10 @@ export const fundEth: ActionType<{
 }
 
 export const fundLink: ActionType<{
-  nodeAddress: string
+  contractAddress: string
   linkAddress: string
 }> = async (taskArgs, hre) => {
-  const { linkAddress, nodeAddress } = taskArgs
+  const { linkAddress, contractAddress } = taskArgs
   const { ethers } = hre
   const provider = new ethers.providers.JsonRpcProvider(
     'http://127.0.0.1:8545'
@@ -50,17 +50,29 @@ export const fundLink: ActionType<{
   const LinkToken = await hre.ethers.getContractFactory('LinkToken', wallet)
   const linkToken = LinkToken.attach(linkAddress)
 
-  // Give LINK Token to pay oracle for request to chainlink node
-  // Enough for 100 requests to Node, settings on Oracle charges 1 LINK for fufilling each request
-  const res = await linkToken.transfer(
-    nodeAddress,
-    hre.ethers.utils.parseEther('100'),
-    {
-      from: wallet.address
-    }
-  )
+  // Give LINK Token to pay oracle for request to consumer contract
+  try {
+    await linkToken.transfer(
+      contractAddress,
+      hre.ethers.utils.parseEther('100'),
+      {
+        from: wallet.address
+      }
+    )
 
-  const finality = await res.wait()
+    const newBalance = await linkToken.balanceOf(contractAddress)
 
-  console.log(res, finality)
+    console.table({
+      'Contract Address': contractAddress,
+      'Link Token Address': linkAddress,
+      'Link Token Balance': ethers.utils.formatEther(newBalance)
+    })
+  } catch (error) {
+    console.error(
+      `\nCannot fund contract ${contractAddress} due to :\n\n`,
+      error
+    )
+
+    throw error
+  }
 }
