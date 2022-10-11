@@ -1,4 +1,3 @@
-import { ActionType } from 'hardhat/types'
 import { login } from '../helpers/login'
 import axios from 'axios'
 
@@ -31,12 +30,8 @@ const getInfo = async (authToken: string): Promise<ResponseData> => {
   return response.data
 }
 
-export const nodeInfo: ActionType<{ email: string, pass: string }> = async (
-  taskArgs
-) => {
-  const { email, pass } = taskArgs
-
-  const authenticationToken = await login(email.trim(), pass.trim())
+export const nodeInfo = async (): Promise<void> => {
+  const authenticationToken = await login()
 
   try {
     const info = await getInfo(authenticationToken)

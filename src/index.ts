@@ -13,8 +13,6 @@ import { nodeInfo } from './tasks/node-info'
 task('chainlink:run-node', 'Runs the chainlink node').setAction(runNode)
 
 task('chainlink:create-job', 'Creates the job')
-  .addPositionalParam('email', 'User email needed for login')
-  .addPositionalParam('pass', 'Password for user needed for login')
   .addPositionalParam('oracleAddress', 'Address of Oracle')
   .addOptionalPositionalParam('jobType', 'direct or cron', 'direct')
   .setAction(createJob)
@@ -40,6 +38,4 @@ task('chainlink:fund-link', 'Funds the node with LINK')
   .setAction(fundLink)
 
 task('chainlink:node-info', 'Get node info')
-  .addPositionalParam('email', 'User email needed for login')
-  .addPositionalParam('pass', 'Password for user needed for login')
   .setAction(nodeInfo)

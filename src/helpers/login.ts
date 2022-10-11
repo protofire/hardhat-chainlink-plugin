@@ -1,8 +1,8 @@
 import axios from 'axios'
 
 export const login = async (
-  email: string,
-  password: string
+  email: string = 'hardhatuser@protofire.io',
+  password: string = 'password123456789'
 ): Promise<string> => {
   try {
     console.info(`\nAuthenticating User ${email} using password ${password}\n`)
