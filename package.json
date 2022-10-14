@@ -1,0 +1,60 @@
+{
+  "name": "hardhat-chainlink-plugin",
+  "version": "0.1.0",
+  "description": "Hardhat TypeScript plugin to run a chainlink node and interact with it",
+  "repository": "github:protofire/hardhat-chainlink-plugin",
+  "author": "Protofire.io",
+  "license": "MIT",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "ethereum",
+    "smart-contracts",
+    "hardhat",
+    "hardhat-plugin"
+  ],
+  "scripts": {
+    "lint:fix": "prettier --write 'src/**/*.{js,ts}' 'test/**/*.{js,ts}' && eslint 'src/**/*.{js,ts}' --fix",
+    "lint": "eslint src/**/*.ts",
+    "test": "mocha --exit --recursive 'test/**/*.test.ts'",
+    "copy": "mkdir -p dist/tasks && cp src/setup/Dockerfile dist && cp src/setup/docker-compose.yaml dist && cp src/setup/env.template dist/tasks/.env && cp -r artifacts dist && cp -r cache dist",
+    "build": "tsc --project tsconfig.json && hardhat compile && npm run copy",
+    "watch": "tsc -w --project tsconfig.json",
+    "prepublishOnly": "npm run build"
+  },
+  "files": [
+    "dist"
+  ],
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^1.0.2",
+    "@types/chai": "^4.3.3",
+    "@types/fs-extra": "^9.0.13",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "^18.7.16",
+    "@types/node-fetch": "^2.6.2",
+    "@types/uuid": "^8.3.4",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "@typescript-eslint/parser": "^5.38.1",
+    "chai": "^4.3.6",
+    "eslint": "^8.24.0",
+    "eslint-config-standard-with-typescript": "^23.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-n": "^15.3.0",
+    "eslint-plugin-promise": "^6.0.1",
+    "hardhat": "^2.11.1",
+    "mocha": "^10.0.0",
+    "prettier": "2.7.1",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.8.4"
+  },
+  "peerDependencies": {
+    "hardhat": "^2.0.0"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.5.1",
+    "@nomicfoundation/solidity-analyzer": "^0.1.0",
+    "axios": "0.27.2",
+    "docker-compose": "^0.23.17",
+    "uuid": "^9.0.0"
+  }
+}
