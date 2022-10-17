@@ -183,4 +183,9 @@ Output
 └────────────┴────────────────────────────────────────┘
 ```
 
-Take note of the ExternalID of the Job.
+TROUBLESHOOTING
+--------
+
+If you turn off the hardhat node all history will get wiped. In that case you will also need to run the chainlink node again using the `chainlink:run-node` command.
+
+If the chainlink node becomes out of sync (info not updating) then you can run `chainlink:run-node true` which will restart the node without destroying the containers.

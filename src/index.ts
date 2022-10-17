@@ -9,8 +9,11 @@ import { deployLinkToken } from './tasks/deploy-link-token'
 import { deployOracle } from './tasks/deploy-oracle'
 import { fundEth, fundLink } from './tasks/fund'
 import { nodeInfo } from './tasks/node-info'
+import { boolean } from 'hardhat/internal/core/params/argumentTypes'
 
-task('chainlink:run-node', 'Runs the chainlink node').setAction(runNode)
+task('chainlink:run-node', 'Runs the chainlink node')
+  .addOptionalPositionalParam('restartOnly', 'Restart the existing containers instead of removing and recreating them', false, boolean)
+  .setAction(runNode)
 
 task('chainlink:create-job', 'Creates the job')
   .addPositionalParam('oracleAddress', 'Address of Oracle')
