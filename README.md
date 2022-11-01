@@ -166,14 +166,14 @@ Output
 └────────────┴────────────────────────────────────────┘
 ```
 
-<<<<<<< Updated upstream
+
 TROUBLESHOOTING
 --------
 
 If you turn off the hardhat node all history will get wiped. In that case you will also need to run the chainlink node again using the `chainlink:run-node` command.
 
 If the chainlink node becomes out of sync (info not updating) then you can run `chainlink:run-node true` which will restart the node without destroying the containers.
-=======
+
 Take note of the ExternalID of the Job.
 
 
@@ -181,4 +181,4 @@ Running locally
 ===============
 
 If you want to test out this commands in this repository you will need to change the initial setup a bit by first running `npm install && npm run build` and only after that will you be able to run the hardhat node from the root of this repository. 
->>>>>>> Stashed changes
+
