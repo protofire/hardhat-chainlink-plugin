@@ -12,22 +12,12 @@ This plugin makes spinning up a local Chainlink node faster and easier, allowing
 
 ### Installation
 
-Run the following commands to setup a local environment
-
 **Step 1:**
 
 Install `hardhat-chainlink-plugin` hardhat plugin.
 
-Npm users.
-
 ```console
-npm install @..
-```
-
-Yarn users.
-
-```console
-yarn add @..
+npm install hardhat-chainlink-plugin
 ```
 
 **Step 2:**
@@ -36,7 +26,7 @@ Open Docker Desktop
 
 **Step 3:**
 
-Always run hardhat node first
+Run hardhat node
 
 ```console
 npx hardhat node
@@ -44,37 +34,30 @@ npx hardhat node
 
 **Step 4:**
 
-Install dependecies and run build. This step is only needed during development phase.
-
-```console
-npm install
-npm run build
-```
-
-**Step 5:**
-
-Spin up a chainlink node using the following command, this will set-up some env variables. Please do not start it from docker desktop. 
+Spin up a chainlink node using the following command, which will set-up some env variables. Please do not start it from docker desktop. 
 
 ```console
 npx hardhat chainlink:run-node
 ```
-IMPORTANT! This command uses docker and as such it requires docker installed (and docker compose).
+IMPORTANT! 
 
 Each time this command runs it will remove all containers and re-create them (before running docker compose up we first run docker compose down)
 
 This behavior is analogous to the hardhat EVM node losing all previous history each time it is restarted.
 
+If you want to restart only pass an additional `true` parameter (restartOnly) like this `npx hardhat chainlink:run-node true`
+
 If you visit http://127.0.0.1:6688 in your browser, you should see the chainlink node login page displayed.
 
 You can use details: username **hardhatuser@protofire.io** and password **password123456789** to login to your local chainlink node.
 
-Run this to see the available tasks
+To see the available tasks to interact with your node run
 
 ```console
 npx hardhat
 ```
 
-**Step 6:**
+**Step 5:**
 
 Next, for your chainlink node to fulfill request it needs to be funded with ETH. To fund your node first you need to get the node info.
 
@@ -122,7 +105,7 @@ Output:
 
 If you login again to your Node UI from http://127.0.0.1:6688 or simply refresh the page if you are still login. You will see the node updated password on the dashboard.
 
-**Step 7:**
+**Step 6:**
 
 Deploy Link token on hardhat. Link Token will be used by Consumer contract to pay for Oracle request.
 
@@ -140,7 +123,7 @@ Output
 └────────────────────┴──────────────────────────────────────────────┘
 ```
 
-**Step 8:**
+**Step 7:**
 
 Deploy Oracle contract.
 
@@ -160,7 +143,7 @@ Output
 └────────────────┴──────────────────────────────────────────────┘
 ```
 
-**Step 9:**
+**Step 8:**
 
 Create a chainlink Job.
 
@@ -183,9 +166,19 @@ Output
 └────────────┴────────────────────────────────────────┘
 ```
 
+<<<<<<< Updated upstream
 TROUBLESHOOTING
 --------
 
 If you turn off the hardhat node all history will get wiped. In that case you will also need to run the chainlink node again using the `chainlink:run-node` command.
 
 If the chainlink node becomes out of sync (info not updating) then you can run `chainlink:run-node true` which will restart the node without destroying the containers.
+=======
+Take note of the ExternalID of the Job.
+
+
+Running locally
+===============
+
+If you want to test out this commands in this repository you will need to change the initial setup a bit by first running `npm install && npm run build` and only after that will you be able to run the hardhat node from the root of this repository. 
+>>>>>>> Stashed changes
